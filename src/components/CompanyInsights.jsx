@@ -105,35 +105,6 @@ export function CompanyInsights() {
     }
   ];
 
-  const virtualTours = [
-    {
-      company: "Google Bangalore",
-      type: "360° Office Tour",
-      duration: "12 minutes",
-      views: 45000,
-      rating: 4.8,
-      thumbnail: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=300&h=200&fit=crop",
-      features: ["Work Spaces", "Cafeteria", "Recreation Areas", "Meeting Rooms"]
-    },
-    {
-      company: "Microsoft Hyderabad",
-      type: "VR Experience",
-      duration: "8 minutes",
-      views: 32000,
-      rating: 4.7,
-      thumbnail: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=300&h=200&fit=crop",
-      features: ["Innovation Labs", "Collaboration Spaces", "Employee Wellness"]
-    },
-    {
-      company: "Amazon Mumbai",
-      type: "Interactive Tour",
-      duration: "15 minutes",
-      views: 28000,
-      rating: 4.6,
-      thumbnail: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=300&h=200&fit=crop",
-      features: ["Fulfillment Center", "Tech Hub", "Employee Facilities"]
-    }
-  ];
 
   const formatSalary = (amount) => {
     return `₹${(amount / 100000).toFixed(1)}L`;
@@ -156,16 +127,7 @@ export function CompanyInsights() {
           <h1 className="text-2xl font-semibold mb-2">Company Insights Dashboard</h1>
           <p className="text-gray-600">Market trends, salary insights, and virtual office tours</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" className="gap-2">
-            <Glasses className="w-4 h-4" />
-            VR/AR Tours
-          </Button>
-          <Button className="gap-2">
-            <BarChart3 className="w-4 h-4" />
-            Export Report
-          </Button>
-        </div>
+      
       </div>
 
       {/* Quick Stats */}
@@ -245,7 +207,6 @@ export function CompanyInsights() {
           <TabsTrigger value="trends">Hiring Trends</TabsTrigger>
           <TabsTrigger value="skills">Skill Demand</TabsTrigger>
           <TabsTrigger value="salary">Salary Insights</TabsTrigger>
-          <TabsTrigger value="tours">Virtual Tours</TabsTrigger>
         </TabsList>
 
         {/* Hiring Trends */}
@@ -452,68 +413,7 @@ export function CompanyInsights() {
               </CardTitle>
               <p className="text-sm text-gray-600">Experience company workspaces before you apply</p>
             </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {virtualTours.map((tour, index) => (
-                  <div key={index} className="border rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-                    <div className="relative">
-                      <img 
-                        src={tour.thumbnail} 
-                        alt={tour.company}
-                        className="w-full h-40 object-cover"
-                      />
-                      <div className="absolute top-2 right-2">
-                        <Badge variant="secondary" className="text-xs bg-white/90">
-                          {tour.type}
-                        </Badge>
-                      </div>
-                      <div className="absolute bottom-2 left-2">
-                        <Badge variant="secondary" className="text-xs bg-black/70 text-white">
-                          {tour.duration}
-                        </Badge>
-                      </div>
-                    </div>
-                    
-                    <div className="p-4">
-                      <h3 className="font-semibold mb-2">{tour.company}</h3>
-                      
-                      <div className="flex items-center gap-3 text-xs text-gray-600 mb-3">
-                        <div className="flex items-center gap-1">
-                          <Eye className="w-3 h-3" />
-                          {tour.views.toLocaleString()} views
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Award className="w-3 h-3" />
-                          {tour.rating}/5.0
-                        </div>
-                      </div>
-
-                      <div className="mb-4">
-                        <p className="text-xs font-medium text-gray-700 mb-2">Features:</p>
-                        <div className="flex flex-wrap gap-1">
-                          {tour.features.map((feature, featureIndex) => (
-                            <Badge key={featureIndex} variant="outline" className="text-xs">
-                              {feature}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="flex gap-2">
-                        <Button size="sm" className="flex-1 gap-2">
-                          <Glasses className="w-3 h-3" />
-                          Start Tour
-                        </Button>
-                        <Button variant="outline" size="sm" className="gap-2">
-                          <MapPin className="w-3 h-3" />
-                          Location
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
+          
           </Card>
         </TabsContent>
       </Tabs>

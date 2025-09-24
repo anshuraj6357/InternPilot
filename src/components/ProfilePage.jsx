@@ -2,14 +2,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Progress } from "./ui/progress";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import  axios  from "axios";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { 
-  Upload, 
-  Download, 
-  ExternalLink, 
-  MapPin, 
-  Mail, 
-  Phone, 
+import { CheckCircle } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+
+import {
+  Upload,
+  Download,
+  ExternalLink,
+  MapPin,
+  Mail,
+  Phone,
   Calendar,
   BookOpen,
   Award,
@@ -19,27 +23,27 @@ import {
 
 export function ProfilePage() {
   const appliedInternships = [
-    { 
-      company: "Google", 
-      role: "Software Engineering Intern", 
-      status: "In Review", 
-      skillMatch: 87, 
+    {
+      company: "Google",
+      role: "Software Engineering Intern",
+      status: "In Review",
+      skillMatch: 87,
       appliedDate: "2 days ago",
       logo: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=40&h=40&fit=crop"
     },
-    { 
-      company: "Microsoft", 
-      role: "Frontend Developer Intern", 
-      status: "Application Sent", 
-      skillMatch: 92, 
+    {
+      company: "Microsoft",
+      role: "Frontend Developer Intern",
+      status: "Application Sent",
+      skillMatch: 92,
       appliedDate: "5 days ago",
       logo: "https://images.unsplash.com/photo-1633409361618-c73427e4e206?w=40&h=40&fit=crop"
     },
-    { 
-      company: "Amazon", 
-      role: "Full Stack Developer", 
-      status: "Interview Scheduled", 
-      skillMatch: 78, 
+    {
+      company: "Amazon",
+      role: "Full Stack Developer",
+      status: "Interview Scheduled",
+      skillMatch: 78,
       appliedDate: "1 week ago",
       logo: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=40&h=40&fit=crop"
     },
@@ -60,6 +64,54 @@ export function ProfilePage() {
     { name: "AWS", importance: "High", resources: 4 },
     { name: "System Design", importance: "High", resources: 6 },
   ];
+  const fileInputRef = useRef(null);
+  const [resumeFile, setResumefile] = useState(" ");
+  const [uploaded, setuploaded] = useState(false);
+
+
+  const handlefilechange = async(e) => {
+    const file = e.target.files[0];
+    setResumefile(file);
+    setuploaded(true);
+    try {
+        const formData = new FormData();
+  formData.append("resume", file);
+      
+    const response =await axios.post("http://localhost:5000/api/user/Resume",formData);
+    console.log("response from backend",response);
+      
+    } catch (error) {
+      console.error("Error in uploading the file",error);
+      
+    }
+
+
+    console.log("file changed", file)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("form Submitted")
+  }
+
+  // const profile={
+  //   name:"arjyu",
+  //   image,
+  //   branch,
+  //   address,
+  //   mail,
+  //   phone,
+  //   AllresumeSkills,
+  //   alappliedInternships,
+  //   skillstoimprove,
+  //   year,
+  //   profilecompletion,
+  //   uploadresume,
+  //   uploadresumetime,
+  //   resumetips,
+
+
+  // }
 
   return (
     <div className="p-6 space-y-6">
@@ -77,7 +129,7 @@ export function ProfilePage() {
                 Update Photo
               </Button>
             </div>
-            
+
             <div className="flex-1">
               <div className="flex items-start justify-between mb-4">
                 <div>
@@ -131,21 +183,63 @@ export function ProfilePage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-              <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-              <p className="text-sm text-gray-600 mb-2">Current Resume: resume_v3.pdf</p>
-              <p className="text-xs text-gray-500 mb-4">Uploaded 2 weeks ago</p>
-              <div className="space-y-2">
-                <Button variant="outline" size="sm" className="w-full gap-2">
-                  <Download className="w-4 h-4" />
-                  Download
-                </Button>
-                <Button size="sm" className="w-full gap-2">
-                  <Upload className="w-4 h-4" />
-                  Upload New
-                </Button>
+            <form
+           
+              onSubmit={handleSubmit}
+              encType="multipart/form-data"
+              className="grid lg:grid-cols-2 gap-10"
+            >
+              {/* Resume Upload Card */}
+              <div className="space-y-6">
+                <div className="relative bg-white/90 backdrop-blur-md rounded-3xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-2xl transition-all duration-300">
+
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-10 pointer-events-none"></div>
+
+                  <div className="p-10 space-y-8">
+                    {/* Header */}
+                    <div className="flex items-center space-x-4">
+                      <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center shadow-md">
+                        <Upload className="w-7 h-7 text-white" />
+                      </div>
+                      <h2 className="text-2xl font-bold text-gray-800 tracking-tight">
+                        Upload Your Resume
+                      </h2>
+                    </div>
+
+                    {/* File Upload Area */}
+                    <label
+                      htmlFor="resume-upload"
+                      className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-8 cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all duration-200"
+                    >
+                      <Upload className="w-10 h-10 text-blue-500 mb-3" />
+                      <span className="text-gray-700 font-medium">Drag & Drop or Click to Upload</span>
+                      <span className="text-sm text-gray-500 mt-1">PDF or TXT (Max 5MB)</span>
+                      <input
+                        id="resume-upload"
+                        type="file"
+                        accept=".pdf,.txt"
+                        className="hidden"
+                        ref={fileInputRef}
+                        onChange={(e) => e.target.files?.[0] && handlefilechange(e)}
+                      />
+                    </label>
+
+                    {/* Success / Status */}
+                    {uploaded ? (
+                      <div className="flex items-center space-x-3 bg-green-50 border border-green-200 rounded-lg p-3">
+                        <CheckCircle className="w-6 h-6 text-green-600" />
+                        <p className="text-gray-700 font-medium">{resumeFile.name}</p>
+                      </div>
+                    ) : (
+                      <p className="text-gray-500 text-sm italic text-center">No resume uploaded yet</p>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
+            </form>
+
+
             <div className="mt-4 p-3 bg-yellow-50 rounded-lg">
               <div className="flex items-start gap-2">
                 <AlertCircle className="w-4 h-4 text-yellow-600 mt-0.5" />
@@ -199,8 +293,8 @@ export function ProfilePage() {
               {appliedInternships.map((internship, index) => (
                 <div key={index} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
                   <div className="flex items-start gap-3">
-                    <img 
-                      src={internship.logo} 
+                    <img
+                      src={internship.logo}
                       alt={internship.company}
                       className="w-10 h-10 rounded-lg object-cover"
                     />
@@ -208,10 +302,10 @@ export function ProfilePage() {
                       <h4 className="font-medium text-sm">{internship.role}</h4>
                       <p className="text-sm text-gray-600">{internship.company}</p>
                       <div className="flex items-center gap-2 mt-2">
-                        <Badge 
+                        <Badge
                           variant={
                             internship.status === "In Review" ? "secondary" :
-                            internship.status === "Interview Scheduled" ? "default" : "outline"
+                              internship.status === "Interview Scheduled" ? "default" : "outline"
                           }
                           className="text-xs"
                         >
@@ -248,7 +342,7 @@ export function ProfilePage() {
                 <div key={index} className="border rounded-lg p-4">
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-medium text-sm">{skill.name}</h4>
-                    <Badge 
+                    <Badge
                       variant={skill.importance === "High" ? "destructive" : "secondary"}
                       className="text-xs"
                     >

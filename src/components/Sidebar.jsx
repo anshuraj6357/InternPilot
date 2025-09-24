@@ -22,7 +22,7 @@ export function Sidebar({ activeTab, setActiveTab }) {
     { id: 'contests', label: 'Contests & Practice', icon: Trophy },
     { id: 'insights', label: 'Company Insights', icon: Building2 },
     { id: 'mentorship', label: 'Peer Mentorship', icon: Users },
-    { id: 'certificates', label: 'Certificates', icon: Award },
+    // { id: 'certificates', label: 'Certificates', icon: Award },
     { id: 'roadmap', label: 'Career Roadmap', icon: Route },
     { id: 'wellbeing', label: 'Wellbeing Hub', icon: Heart },
   ];

@@ -15,8 +15,6 @@ import {
 
 export function Dashboard() {
   const quickStats = [
-    { label: "Profile Completion", value: "85%", change: "+5%", icon: Target, color: "blue" },
-    { label: "Skills Matched", value: "12/15", change: "+2", icon: TrendingUp, color: "green" },
     { label: "Applications Sent", value: "8", change: "+3", icon: Calendar, color: "orange" },
     { label: "XP This Week", value: "340", change: "+120", icon: Award, color: "purple" },
   ];
@@ -28,11 +26,6 @@ export function Dashboard() {
     { action: "Connected with", company: "Senior Dev Mentor", time: "3 days ago", type: "mentorship" },
   ];
 
-  const upcomingDeadlines = [
-    { title: "TCS Internship Application", daysLeft: 3, urgent: true },
-    { title: "JavaScript Assessment", daysLeft: 5, urgent: false },
-    { title: "Mock Interview Session", daysLeft: 7, urgent: false },
-  ];
 
   return (
     <div className="p-6 space-y-6">
@@ -86,7 +79,7 @@ export function Dashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div >
               {recentActivities.map((activity, index) => (
                 <div key={index} className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition-colors">
                   <div className={`w-2 h-2 rounded-full ${
@@ -108,35 +101,7 @@ export function Dashboard() {
           </CardContent>
         </Card>
 
-        {/* Upcoming Deadlines */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Calendar className="w-5 h-5" />
-              Upcoming Deadlines
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {upcomingDeadlines.map((deadline, index) => (
-                <div key={index} className="p-3 rounded-lg border border-gray-200">
-                  <p className="font-medium text-sm mb-2">{deadline.title}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-600">
-                      {deadline.daysLeft} days left
-                    </span>
-                    <Badge variant={deadline.urgent ? "destructive" : "secondary"} className="text-xs">
-                      {deadline.urgent ? "Urgent" : "Upcoming"}
-                    </Badge>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <Button variant="outline" className="w-full mt-4" size="sm">
-              View All Deadlines
-            </Button>
-          </CardContent>
-        </Card>
+      
       </div>
 
       {/* Quick Actions */}
